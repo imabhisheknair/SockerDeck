@@ -1,0 +1,212 @@
+{% extends 'myapp/admin_base.html' %}
+{% load static %}
+{% block title %}Player Details Add{% endblock %}
+{% block body %}
+<center>
+    <h1>Player Details Add</h1>
+     <div class="container">
+    <form role="form" name="frm" action="{% url 'admin_player_info_add'%}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="fname">First Name :</label>
+            <input class="form-control" type="text" name="fname" id="fname">
+        </div>
+        <div class="form-group">
+            <label for="lname">Last Name :</label>
+            <input class="form-control" type="text" name="lname" id="lname">
+        </div>
+        <div class="form-group">
+            <label for="country_id">Country :</label>
+            <select class="form-control" id="country_id"  name="country_id">
+                {% for  c in country_list%}
+                <option value="{{c.id}}">{{c.country}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="document">Image :</label>
+            <input class="form-control" type="file" name="document" id="document">
+        </div>
+        <div class="form-group">
+            <label for="descp">Description :</label>
+            <textarea class="form-control" name="descp" id="descp"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="age">Age :</label>
+            <input class="form-control" type="number" name="age" id="age">
+        </div>
+        <div class="form-group">
+            <label for="height_cm">Height(Cm) :</label>
+            <input class="form-control" type="number" name="height_cm" id="height_cm">
+        </div>
+        <div class="form-group">
+            <label for="weight_kg">Weight (Kg) :</label>
+            <input class="form-control" type="text" name="weight_kg" id="weight_kg">
+        </div>
+        <div class="form-group">
+            <label for="overall">Overall Score :</label>
+            <input class="form-control" type="number" name="overall" id="overall">
+        </div>
+        <div class="form-group">
+            <label for="player_positions">Player Positions</label>
+            <input class="form-control" type="text" name="player_positions" id="player_positions">
+        </div>
+        <div class="form-group">
+            <label for="weak_foot">Weak Foot :</label>
+            <input class="form-control" type="text" name="weak_foot" id="weak_foot">
+        </div>
+        <div class="form-group">
+            <label for="skill_moves">Skill Moves :</label>
+            <input class="form-control" type="text" name="skill_moves" id="skill_moves">
+        </div>
+        <div class="form-group">
+            <label for="attacking_crossing">Attacking Crossing :</label>
+            <input class="form-control" type="text" name="attacking_crossing" id="attacking_crossing">
+        </div>
+        <div class="form-group">
+            <label for="attacking_finishing">Attacking Finishing :</label>
+            <input class="form-control" type="text" name="attacking_finishing" id="attacking_finishing">
+        </div>
+        <div class="form-group">
+            <label for="attacking_heading_accuracy">Attacking Heading Accuracy :</label>
+            <input class="form-control" type="text" name="attacking_heading_accuracy" id="attacking_heading_accuracy">
+        </div>
+        <div class="form-group">
+            <label for="attacking_short_passing">Attacking Short Passing :</label>
+            <input class="form-control" type="text" name="attacking_short_passing" id="attacking_short_passing">
+        </div>
+        <div class="form-group">
+            <label for="attacking_volleys">Attacking Volleys :</label>
+            <input class="form-control" type="text" name="attacking_volleys" id="attacking_volleys">
+        </div>
+        <div class="form-group">
+            <label for="skill_dribbling">Skill Dribbling :</label>
+            <input class="form-control" type="text" name="skill_dribbling" id="skill_dribbling">
+        </div>
+        <div class="form-group">
+            <label for="skill_curve">Skill Curve :</label>
+            <input class="form-control" type="text" name="skill_curve" id="skill_curve">
+        </div>
+        <div class="form-group">
+            <label for="skill_fk_accuracy">Skill Fk Accuracy :</label>
+            <input class="form-control" type="text" name="skill_fk_accuracy" id="skill_fk_accuracy">
+        </div>
+        <div class="form-group">
+            <label for="skill_long_passing">Skill Long Passing :</label>
+            <input class="form-control" type="text" name="skill_long_passing" id="skill_long_passing">
+        </div>
+        <div class="form-group">
+            <label for="skill_ball_control">Skill Ball Control :</label>
+            <input class="form-control" type="text" name="skill_ball_control" id="skill_ball_control">
+        </div>
+        <div class="form-group">
+            <label for="movement_acceleration">Movement Acceleration :</label>
+            <input class="form-control" type="text" name="movement_acceleration" id="movement_acceleration">
+        </div>
+        <div class="form-group">
+            <label for="movement_sprint_speed">Movement Sprint Speed :</label>
+            <input class="form-control" type="text" name="movement_sprint_speed" id="movement_sprint_speed">
+        </div>
+        <div class="form-group">
+            <label for="movement_agility">Movement Agility :</label>
+            <input class="form-control" type="text" name="movement_agility" id="movement_agility">
+        </div>
+        <div class="form-group">
+            <label for="movement_reactions">Movement Reactions :</label>
+            <input class="form-control" type="text" name="movement_reactions" id="movement_reactions">
+        </div>
+        <div class="form-group">
+            <label for="movement_balance">Movement Balance :</label>
+            <input class="form-control" type="text" name="movement_balance" id="movement_balance">
+        </div>
+        <div class="form-group">
+            <label for="power_shot_power">Power Shot Power :</label>
+            <input class="form-control" type="text" name="power_shot_power" id="power_shot_power">
+        </div>
+        <div class="form-group">
+            <label for="power_jumping">Power Jumping :</label>
+            <input class="form-control" type="text" name="power_jumping" id="power_jumping">
+        </div>
+        <div class="form-group">
+            <label for="power_stamina">Power Stamina :</label>
+            <input class="form-control" type="text" name="power_stamina" id="power_stamina">
+        </div>
+        <div class="form-group">
+            <label for="power_strength">Power Strength :</label>
+            <input class="form-control" type="text" name="power_strength" id="power_strength">
+        </div>
+        <div class="form-group">
+            <label for="power_long_shots">Power Long Shots :</label>
+            <input class="form-control" type="text" name="power_long_shots" id="power_long_shots">
+        </div>
+        <div class="form-group">
+            <label for="mentality_aggression">Mentality Aggression :</label>
+            <input class="form-control" type="text" name="mentality_aggression" id="mentality_aggression">
+        </div>
+        <div class="form-group">
+            <label for="mentality_interceptions">Mentality Interceptions :</label>
+            <input class="form-control" type="text" name="mentality_interceptions" id="mentality_interceptions">
+        </div>
+        <div class="form-group">
+            <label for="mentality_positioning">Mentality Positioning :</label>
+            <input class="form-control" type="text" name="mentality_positioning" id="mentality_positioning">
+        </div>
+        <div class="form-group">
+            <label for="mentality_vision">Mentality Vision :</label>
+            <input class="form-control" type="text" name="mentality_vision" id="mentality_vision">
+        </div>
+        <div class="form-group">
+            <label for="mentality_penalties">Mentality Penalties :</label>
+            <input class="form-control" type="text" name="mentality_penalties" id="mentality_penalties">
+        </div>
+        <div class="form-group">
+            <label for="mentality_composure">Mentality Composure :</label>
+            <input class="form-control" type="text" name="mentality_composure" id="mentality_composure">
+        </div>
+        <div class="form-group">
+            <label for="defending_marking">Defending Marking :</label>
+            <input class="form-control" type="text" name="defending_marking" id="defending_marking">
+        </div>
+        <div class="form-group">
+            <label for="defending_standing_tackle">Defending Standing Tackle :</label>
+            <input class="form-control" type="text" name="defending_standing_tackle" id="defending_standing_tackle">
+        </div>
+        <div class="form-group">
+            <label for="defending_sliding_tackle">Defending Sliding Tackle :</label>
+            <input class="form-control" type="text" name="defending_sliding_tackle" id="defending_sliding_tackle">
+        </div>
+        <div class="form-group">
+            <label for="goalkeeping_diving">Goalkeeping Diving :</label>
+            <input class="form-control" type="text" name="goalkeeping_diving" id="goalkeeping_diving">
+        </div>
+        <div class="form-group">
+            <label for="goalkeeping_handling">Goalkeeping Handling :</label>
+            <input class="form-control" type="text" name="goalkeeping_handling" id="goalkeeping_handling">
+        </div>
+        <div class="form-group">
+            <label for="goalkeeping_kicking">Goalkeeping Kicking :</label>
+            <input class="form-control" type="text" name="goalkeeping_kicking" id="goalkeeping_kicking">
+        </div>
+        <div class="form-group">
+            <label for="goalkeeping_positioning">Goalkeeping Positioning :</label>
+            <input class="form-control" type="text" name="goalkeeping_positioning" id="goalkeeping_positioning">
+        </div>
+        <div class="form-group">
+            <label for="goalkeeping_reflexes">Goalkeeping Reflexes :</label>
+            <input class="form-control" type="text" name="goalkeeping_reflexes" id="goalkeeping_reflexes">
+        </div>
+        <div class="form-group">
+            <label for="estimate">Estimate :</label>
+            <input class="form-control" type="text" name="estimate" id="estimate">
+        </div>
+        <div class="form-group">
+            <label for="price">Price :</label>
+            <input class="form-control" type="text" name="price" id="price">
+        </div>
+       <button type="submit" class="btn btn-info" id="bt" name="bt">Add</button>
+        <button type="reset" class="btn btn-info" id="rt" name="rt">Clear</button>
+    </form>
+     </div>
+    <h3>{{msg}}</h3>
+</center>
+{% endblock %}

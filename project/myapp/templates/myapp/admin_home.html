@@ -1,0 +1,10 @@
+{% extends 'myapp/admin_base.html' %}
+{% load static %}
+{% block background %}{% endblock %}
+{% block title %}Hello Admin!!!{% endblock %}
+{% block body %}
+<center>
+    <h1 class="text-danger">Welcome Admin</h1>
+    <img src="{% static './myapp/images/mini-football.jpg' %}" width="600" height="400">
+</center>
+{% endblock %}
