@@ -35,6 +35,7 @@ urlpatterns = [
 
     path('admin_player_info_add', views.admin_player_info_add, name='admin_player_info_add'),
     path('admin_player_info_view', views.admin_player_info_view, name='admin_player_info_view'),
+    path('admin_player_info_profile', views.admin_player_info_profile, name='admin_player_info_view'),
     path('admin_player_info_delete', views.admin_player_info_delete, name='admin_player_info_delete'),
 
     path('admin_club_master_add', views.admin_club_master_add, name='admin_club_master_add'),
@@ -59,6 +60,7 @@ urlpatterns = [
 
     path('club_player_add', views.club_player_add, name='club_player_add'),
     path('club_player_view', views.club_player_view, name='club_player_view'),
+    path('club_player_view/profile', views.club_player_profile, name='club_player_profile'),
     path('club_player_delete', views.club_player_delete, name='club_player_delete'),
 
     path('club_player_info_view', views.club_player_info_view, name='club_player_info_view'),

@@ -27,7 +27,7 @@
                 <th>Image</th>
                 <th>Description</th>
                 <th>Age</th>
-                <th>Height(Cm)</th>
+                <!-- <th>Height(Cm)</th>
                 <th>Weight</th>
                 <th>Overall Score</th>
                 <th>Player Positions</th>
@@ -69,7 +69,7 @@
                 <th>Goalkeeping Reflexes</th>
                 <th>Estimate</th>
                 <th>Price</th>
-                <th>Date / Time</th>
+                <th>Date / Time</th> -->
                 <th>Action</th>
             </tr>
             </thead>
@@ -86,7 +86,7 @@
                 <td><embed src="../static/myapp/media/{{ pi.pic_path }}" width="100" height="100"></embed></td>
                 <td>{{ pi.descp}}</td>
                 <td>{{ pi.age}}</td>
-                <td>{{ pi.height_cm}}</td>
+                <!-- <td>{{ pi.height_cm}}</td>
                 <td>{{ pi.weight_kg}}</td>
                 <td>{{ pi.overall}}</td>
                 <td>{{ pi.player_positions}}</td>
@@ -128,11 +128,14 @@
                 <td>{{ pi.goalkeeping_reflexes}}</td>
                 <td>{{ pi.estimate}}</td>
                 <td>{{ pi.price}}</td>
-                <td>{{ pi.dt }} / {{ pi.tm }}</td>
+                <td>{{ pi.dt }} / {{ pi.tm }}</td> -->
                 <td>
                     <a href="../club_player_club_history_view?player_id={{ pi.id }}">Club History</a> |
                     <a href="../club_player_match_history_view?player_id={{ pi.id }}">Match History</a> |
-                    <a href="../club_player_add?player_id={{ pi.id }}">Add</a>
+                    <!-- <a href="../club_player_add?player_id={{ pi.id }}">Add</a> -->
+                    <a href="../club_player_view/profile?player_id={{ pi.id }}">
+                        <button type="button" class="btn btn-primary">View Info</button>
+                    </a>
                 </td>
             </tr>
             <tbody>

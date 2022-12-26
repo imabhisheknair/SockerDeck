@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 
 # Create your views here.
 from django.db.models import Max
@@ -123,8 +123,8 @@ def admin_player_info_add(request):
         u_file = request.FILES['document']
         fs = FileSystemStorage()
         pic_path = fs.save(u_file.name, u_file)
-        country_id = int(request.POST.get('country_id'))
-        club_id = 0
+        country_id = request.POST.get('country_id')
+        club_id = 1
         status = 'active'
         dt = datetime.today().strftime('%Y-%m-%d')
         tm = datetime.today().strftime('%H:%M:%S')
@@ -231,6 +231,23 @@ def admin_player_info_view(request):
     context = {'player_list': pi_l,'country_list': cl}
     return render(request, './myapp/admin_player_info_view.html',context)
 
+def admin_player_info_profile(request):
+    id = request.GET.get('id') 
+    player = player_info.objects.filter(id=id)
+    c_l = country_master.objects.all()
+    cl = {}
+    for c in c_l:
+        cl[c.id] = c.country
+    if player:
+        player = player.get()
+    else:
+        return redirect(club_player_info_view)    
+    context = {
+        'player': player,
+        'country_list': cl
+    }
+    return render(request, "./myapp/admin_player_info_profile.html", context)
+
 from .models import club_master
 
 def admin_club_master_add(request):
@@ -292,7 +309,7 @@ from .models import player_club_history
 
 def admin_player_club_history_add(request):
     if request.method == 'POST':
-        club_id = 0
+        club_id = 1
         status = 'active'
         dt = datetime.today().strftime('%Y-%m-%d')
         tm = datetime.today().strftime('%H:%M:%S')
@@ -490,6 +507,24 @@ def club_player_info_view(request):
     pi_l = player_info.objects.all()
     context = {'player_list': pi_l,'country_list': cl}
     return render(request, './myapp/club_player_info_view.html',context)
+
+
+def club_player_profile(request):
+    id = request.GET.get('player_id') 
+    player = player_info.objects.filter(id=id)
+    c_l = country_master.objects.all()
+    cl = {}
+    for c in c_l:
+        cl[c.id] = c.country
+    if player:
+        player = player.get()
+    else:
+        return redirect(club_player_info_view)    
+    context = {
+        'player': player,
+        'country_list': cl
+    }
+    return render(request, "./myapp/club_player_info_profile.html", context)
 
 
 def club_player_add(request):
