@@ -3,8 +3,21 @@
 {% block background %}{% endblock %}
 {% block title %}Hello Club!!!{% endblock %}
 {% block body %}
-<center>
-    <h1 class="text-danger">Welcome club</h1>
-    <img src="{% static './myapp/images/mini-football.jpg' %}" width="600" height="400">
-</center>
+<style>
+    body {
+        background-image: url("{% static './myapp/images/bg.jpeg' %}");
+    }
+    div.main {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        margin-top: 4rem;
+    }
+</style>
+<div class="main">
+    <h1 class="text-danger">Welcome {{ club }}</h1>
+    <h4>{{club_details.club_name}}</h4>
+    <p>{{club_details.c_descp}}</p>
+</div>
 {% endblock %}

@@ -177,4 +177,13 @@ class club_player(models.Model):
     club = models.ForeignKey(club_master,  on_delete=models.CASCADE)
     player =  models.ForeignKey(player_info, on_delete=models.CASCADE)
 
+class ClubRequests(models.Model):
+    player = models.ForeignKey(player_info, on_delete=models.CASCADE)
+    club = models.ForeignKey(club_master, on_delete=models.CASCADE)
+    date_added = models.DateTimeField(auto_now_add=True)
 
+
+class PlayerRequests(models.Model):
+    player = models.ForeignKey(player_info, on_delete=models.CASCADE)
+    club = models.ForeignKey(club_master, on_delete=models.CASCADE)
+    date_added = models.DateTimeField(auto_now_add=True)

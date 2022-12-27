@@ -1,8 +1,10 @@
+from django.http import JsonResponse
 from django.shortcuts import redirect, render
+from django.contrib import messages
 
 # Create your views here.
 from django.db.models import Max
-from .models import user_login
+from .models import ClubRequests, user_login
 
 def index(request):
     return render(request,'./myapp/index.html')
@@ -24,7 +26,7 @@ def admin_login(request):
         if len(ul) == 1:
             request.session['user_name'] = ul[0].uname
             request.session['user_id'] = ul[0].id
-            return render(request,'./myapp/admin_home.html')
+            return redirect(admin_home)
         else:
             msg = '<h1> Invalid Uname or Password !!!</h1>'
             context ={ 'msg1':msg }
@@ -124,7 +126,7 @@ def admin_player_info_add(request):
         fs = FileSystemStorage()
         pic_path = fs.save(u_file.name, u_file)
         country_id = request.POST.get('country_id')
-        club_id = 1
+        club_id = request.POST.get('club')
         status = 'active'
         dt = datetime.today().strftime('%Y-%m-%d')
         tm = datetime.today().strftime('%H:%M:%S')
@@ -202,8 +204,12 @@ def admin_player_info_add(request):
         context = {'country_list': c_l,'msg': 'Record Added'}
         return render(request, './myapp/admin_player_info_add.html', context)
     else:
+        clubs = club_master.objects.all()
         c_l = country_master.objects.all()
-        context = {'country_list': c_l}
+        context = {
+            'country_list': c_l,
+            'clubs': clubs,
+        }
         return render(request, './myapp/admin_player_info_add.html',context)
 
 
@@ -270,11 +276,10 @@ def admin_club_master_add(request):
         uname = request.POST.get('uname')
         password = request.POST.get('password')
 
-        ul = user_login(uname=uname, password=password, utype='club')
+        ul = user_login.objects.create(uname=uname, password=password, utype='club')
         ul.save()
-        user_id = user_login.objects.all().aggregate(Max('id'))['id__max']
 
-        cm = club_master(user_id=user_id,url=url,remarks=remarks,owner_details=owner_details,
+        cm = club_master(user_id=ul.id,url=url,remarks=remarks,owner_details=owner_details,
                          addr=addr,c_flag=c_flag,club_name=club_name,c_descp=c_descp,dt=dt,tm=tm)
         cm.save()
         context = {'msg': 'Record Added'}
@@ -441,10 +446,10 @@ def club_login(request):
         #query to select a record based on a condition
         ul = user_login.objects.filter(uname=un, password=pwd, utype='club')
 
-        if len(ul) == 1:
+        if ul:
             request.session['user_name'] = ul[0].uname
             request.session['user_id'] = ul[0].id
-            return render(request,'./myapp/club_home.html')
+            return redirect(club_home)
         else:
             msg = '<h1> Invalid Uname or Password !!!</h1>'
             context ={ 'msg1':msg }
@@ -458,11 +463,17 @@ def club_login(request):
 def club_home(request):
     try:
         uname = request.session['user_name']
-        print(uname)
+        user_id = request.session['user_id']
+        club_details = club_master.objects.get(user_id=user_id)
+
     except:
         return club_login(request)
     else:
-        return render(request,'./myapp/club_home.html')
+        context = {
+            'club': uname,
+            'club_details': club_details,
+        }
+        return render(request,'./myapp/club_home.html', context)
 
 def club_logout(request):
     try:
@@ -500,12 +511,18 @@ def club_changepassword(request):
 from .models import club_player
 
 def club_player_info_view(request):
+    club_id = request.session['user_id']
+    club_requests = ClubRequests.objects.values('player_id').filter(club_id=club_id).all()
+    club_requests = list(club_requests)
+    requests = []
+    for req in club_requests:
+        requests.append(req['player_id'])
     c_l = country_master.objects.all()
     cl = {}
     for c in c_l:
         cl[c.id] = c.country
     pi_l = player_info.objects.all()
-    context = {'player_list': pi_l,'country_list': cl}
+    context = {'player_list': pi_l,'country_list': cl, 'club_requests': requests}
     return render(request, './myapp/club_player_info_view.html',context)
 
 
@@ -525,6 +542,17 @@ def club_player_profile(request):
         'country_list': cl
     }
     return render(request, "./myapp/club_player_info_profile.html", context)
+
+
+def club_player_request(request):
+    id = request.GET.get('player_id', '')
+    club = request.session['user_id']
+    player = player_info.objects.filter(id=id)
+    if player:
+        player = player.get()
+        ClubRequests.objects.create(player_id=id, club_id=club)
+        messages.success(request, "Request sent!")
+    return redirect(club_player_info_view)
 
 
 def club_player_add(request):
@@ -578,11 +606,17 @@ def club_player_view(request):
     for c in c_l:
         cl[c.id] = c.country
     pi_l = []
-    cp_l = club_player.objects.filter(club_id=int(club_id))
+    cp_l = player_info.objects.filter(club_id__user_id=int(club_id))
+    print(club_id)
     for cp in cp_l:
-        pi = player_info.objects.get(id=cp.player_id)
+        pi = player_info.objects.get(id=cp.id)
         pi_l.append(pi)
-    context = {'player_list': pi_l, 'country_list': cl, 'msg': msg}
+    context = {
+            'player_list': pi_l, 
+            'country_list': cl, 
+            'msg': msg, 
+            'players': cp_l, 
+        }
     return render(request, './myapp/club_player_view.html', context)
 
 def club_player_club_history_view(request):

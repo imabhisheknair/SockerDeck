@@ -130,8 +130,8 @@
                 <td>{{ pi.price}}</td>
                 <td>{{ pi.dt }} / {{ pi.tm }}</td>  -->
                 <td>
-                    <a href="../admin_player_club_history_view?player_id={{ pi.id }}">Club History</a> |
-                    <a href="../admin_player_match_history_view?player_id={{ pi.id }}">Match History</a> |
+                    <a class="btn btn-info" href="../admin_player_club_history_view?player_id={{ pi.id }}">Club History</a> |
+                    <a class="btn btn-info" href="../admin_player_match_history_view?player_id={{ pi.id }}">Match History</a> |
                     <a class="btn btn-danger" href="../admin_player_info_delete?id={{ pi.id }}">Delete</a> | 
                     <a href="../admin_player_info_profile?id={{ pi.id }}">
                         <button type="button" class="btn btn-primary">View Info</button>
@@ -142,7 +142,7 @@
             {% endfor %}
         </table>
         </div>
-         <a href="{% url 'admin_player_info_add' %}">Add Player Details</a></h1>
+         <a class="btn btn-primary" href="{% url 'admin_player_info_add' %}">Add Player Details</a></h1>
     </form>
     </div>
     <b>{{msg}}</b>

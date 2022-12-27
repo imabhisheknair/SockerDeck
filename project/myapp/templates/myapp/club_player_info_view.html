@@ -9,12 +9,25 @@
 .tablecenterheadCSS td{
 	text-align:center;
 }
+.success {
+    color: green;
+}
 </style>
 
 <center>
 
     <h1>Player Details</h1>
     <div class="container">
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+                    {{ message }}
+                </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
     <form role="form" name="frm" action="{% url 'club_player_info_view'%}" method="post">
         {% csrf_token %}
         <div class="table-responsive-lg">
@@ -130,12 +143,17 @@
                 <td>{{ pi.price}}</td>
                 <td>{{ pi.dt }} / {{ pi.tm }}</td> -->
                 <td>
-                    <a href="../club_player_club_history_view?player_id={{ pi.id }}">Club History</a> |
-                    <a href="../club_player_match_history_view?player_id={{ pi.id }}">Match History</a> |
+                    <!-- <a href="../club_player_club_history_view?player_id={{ pi.id }}">Club History</a> |
+                    <a href="../club_player_match_history_view?player_id={{ pi.id }}">Match History</a> | -->
                     <!-- <a href="../club_player_add?player_id={{ pi.id }}">Add</a> -->
                     <a href="../club_player_view/profile?player_id={{ pi.id }}">
                         <button type="button" class="btn btn-primary">View Info</button>
                     </a>
+                        {% if pi.id in club_requests %}
+                            <button class="btn btn-success" type="button" disabled>Request Sent</button>
+                        {% else %}
+                            <a href="../club_player_request?player_id={{ pi.id }}" class="btn btn-success">Send request</a>
+                        {% endif %}
                 </td>
             </tr>
             <tbody>

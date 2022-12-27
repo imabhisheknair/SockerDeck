@@ -62,6 +62,7 @@ urlpatterns = [
     path('club_player_view', views.club_player_view, name='club_player_view'),
     path('club_player_view/profile', views.club_player_profile, name='club_player_profile'),
     path('club_player_delete', views.club_player_delete, name='club_player_delete'),
+    path('club_player_request', views.club_player_request),
 
     path('club_player_info_view', views.club_player_info_view, name='club_player_info_view'),
     path('club_player_club_history_view', views.club_player_club_history_view, name='club_player_club_history_view'),

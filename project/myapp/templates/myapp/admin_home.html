@@ -3,8 +3,20 @@
 {% block background %}{% endblock %}
 {% block title %}Hello Admin!!!{% endblock %}
 {% block body %}
-<center>
-    <h1 class="text-danger">Welcome Admin</h1>
-    <img src="{% static './myapp/images/mini-football.jpg' %}" width="600" height="400">
-</center>
+<style>
+    body {
+        background-image: url("{% static './myapp/images/admin_bg.jpeg' %}");
+    }
+    .main {
+        display: flex;
+        justify-content: center;
+        margin-top: 4rem;
+    }
+    .main h1 {
+        color: #fff;
+    }
+</style>
+<div class="main">
+    <h1>Welcome Admin</h1>
+</div>
 {% endblock %}
