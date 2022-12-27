@@ -25,7 +25,7 @@ def player_prediction(training_file,input_set):
     data_path =  os.path.join(settings.BASE_DIR, 'data/data.csv')
     players = pd.read_csv(data_path)
     #players.head()
-    players.drop(['ID'], axis=1, inplace=True)
+    # players.drop(['ID'], axis=1, inplace=True)
     players.drop(['overall'], axis=1, inplace=True)
 
 
@@ -34,9 +34,9 @@ def player_prediction(training_file,input_set):
     data_path= training_file#'data.csv'
     model_data = pd.read_csv(data_path)
     model_data.head()
-    model_data.drop(['ID'], axis=1, inplace=True)
+    # model_data.drop(['ID'], axis=1, inplace=True)
     model_data.drop(['overall'], axis=1, inplace=True)
-    model_data.drop(['player_positions'], axis=1, inplace=True)
+    # model_data.drop(['player_positions'], axis=1, inplace=True)
 
     #print(model_data['player_positions'].unique())
     #model_data = pd.concat([model_data, pd.get_dummies(model_data['player_positions'], prefix='cut', drop_first=True)],axis=1)
@@ -125,7 +125,7 @@ def player_prediction2(training_file,input_set):
     data_path= training_file#'data.csv'
     players = pd.read_csv(data_path)
     #players.head()
-    players.drop(['ID'], axis=1, inplace=True)
+    # players.drop(['ID'], axis=1, inplace=True)
     players.drop(['value_eur'], axis=1, inplace=True)
 
 
@@ -137,9 +137,9 @@ def player_prediction2(training_file,input_set):
     data_path= training_file#'data.csv'
     model_data = pd.read_csv(data_path)
     model_data.head()
-    model_data.drop(['ID'], axis=1, inplace=True)
+    # model_data.drop(['ID'], axis=1, inplace=True)
     model_data.drop(['value_eur'], axis=1, inplace=True)
-    model_data.drop(['player_positions'], axis=1, inplace=True)
+    # model_data.drop(['player_positions'], axis=1, inplace=True)
 
     #print(model_data['player_positions'].unique())
     #model_data = pd.concat([model_data, pd.get_dummies(model_data['player_positions'], prefix='cut', drop_first=True)],axis=1)
