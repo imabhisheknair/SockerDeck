@@ -2,139 +2,67 @@
 {% load static %}
 {% block title %}Player Value Estimation{% endblock %}
 {% block body %}
-<center>
 
-    <h2><font color="#366092"> Evaluate</font></h2>
+    <div class="container mt-3">
+        <h2 class="mb-3"><font color="#366092"> Evaluate</font></h2>
 
-    <form name="frm" action="{% url 'club_query_add' %}" method="post">
-            {% csrf_token %}
-        <table>
-	        <tr>
-	            <td>Age</td>
-	            <td><input type="text" class="form-control" class="form-control"  name="age" placeholder="age 32" required="required"></td>
-                <td>Height</td>
-	            <td><input type="text" class="form-control"  name="height_cm" placeholder="height 170" required="required"></td>
-                <td>Weight</td>
-	            <td><input type="text" class="form-control"  name="weight_kg" placeholder="weight 72" required="required"></td>
-	        </tr>
-            <tr>
-	            <td>Position</td>
-	            <td><input type="text" class="form-control"  name="player_positions" placeholder="player positions RW, CF, ST" required="required"></td>
-                <td>Week Foot</td>
-	            <td><input type="text" class="form-control"  name="weak_foot" placeholder="week foot 4" required="required"></td>
-	        </tr>
-            <tr>
-                <td>Skill Moves</td>
-	            <td><input type="text" class="form-control"  name="skill_moves" placeholder="skill moves 4" required="required"></td>
-                <td>Attacking Crossing</td>
-	            <td><input type="text" class="form-control"  name="attacking_crossing" placeholder="attacking crossings 88" required="required"></td>
-                <td>Attacking Finishing</td>
-	            <td><input type="text" class="form-control"  name="attacking_finishing" placeholder="attacking finishing 95" required="required"></td>
-	        </tr>
-            <tr>
-                <td>Attacking Head Accuracy</td>
-	            <td><input type="text" class="form-control"  name="attacking_heading_accuracy" placeholder="attacking head accuracy 70" required="required"></td>
-                <td>Attacking Short Passing</td>
-	            <td><input type="text" class="form-control"  name="attacking_short_passing" placeholder="attacking short passing 92" required="required"></td>
-                <td>Attacking Volleys</td>
-	            <td><input type="text" class="form-control"  name="attacking_volleys" placeholder="attacking volleys 88" required="required"></td>
-	        </tr>
-            <tr>
-                <td>Skill Dribbling</td>
-	            <td><input type="text" class="form-control"  name="skill_dribbling" placeholder="skill dribbling 97" required="required"></td>
-                <td>Skill Curve</td>
-	            <td><input type="text" class="form-control"  name="skill_curve" placeholder="skill curve 93" required="required"></td>
-                <td>Skill Free Kick Accuracy</td>
-	            <td><input type="text" class="form-control"  name="skill_fk_accuracy" placeholder="free kick accuracy 94" required="required"></td>
-	        </tr>
-            <tr>
-                <td>Skill Long Passing</td>
-	            <td><input type="text" class="form-control"  name="skill_long_passing" placeholder="skill long passing 92" required="required"></td>
-                <td>Skill Ball Control</td>
-	            <td><input type="text" class="form-control"  name="skill_ball_control" placeholder="skill ball control 96" required="required"></td>
-                <td>Movement Acceleration</td>
-	            <td><input type="text" class="form-control"  name="movement_acceleration" placeholder="movement acceleration 91" required="required"></td>
-	        </tr>
-            <tr>
-                <td>Movement Sprint Speed</td>
-	            <td><input type="text" class="form-control"  name="movement_sprint_speed" placeholder="sprint speed 84" required="required"></td>
-                <td>Movement Agility</td>
-	            <td><input type="text" class="form-control"  name="movement_agility" placeholder="movement agility 93" required="required"></td>
-                <td>Movement Reactions</td>
-	            <td><input type="text" class="form-control"  name="movement_reactions" placeholder="movement reactions 95" required="required"></td>
-	        </tr>
-            <tr>
-                <td>Movement balance</td>
-	            <td><input type="text" class="form-control"  name="movement_balance" placeholder="movement balance 95" required="required"></td>
-                <td>Power Shot Power</td>
-	            <td><input type="text" class="form-control"  name="power_shot_power" placeholder="power shot power 86" required="required"></td>
-                <td>Power Jumping</td>
-	            <td><input type="text" class="form-control"  name="power_jumping" placeholder="power jumping 68" required="required"></td>
-	        </tr>
-            <tr>
-                <td>Power Stamina</td>
-	            <td><input type="text" class="form-control"  name="power_stamina" placeholder="power stamina 75" required="required"></td>
-                <td>Power Strength</td>
-	            <td><input type="text" class="form-control"  name="power_strength" placeholder="power strength 68" required="required"></td>
-                <td>Power Long Shots</td>
-	            <td><input type="text" class="form-control"  name="power_long_shots" placeholder="power long shots 94" required="required"></td>
-	        </tr>
-            <tr>
-                <td>Mentality Aggression</td>
-	            <td><input type="text" class="form-control"  name="mentality_aggression" placeholder="mentality aggression 48" required="required"></td>
-                <td>Mentality Interceptions</td>
-	            <td><input type="text" class="form-control"  name="mentality_interceptions" placeholder="mentality interceptions 40" required="required"></td>
-                <td>Mentality Positioning</td>
-	            <td><input type="text" class="form-control"  name="mentality_positioning" placeholder="mentality positioning 94" required="required"></td>
-	        </tr>
+        <form name="frm" action="{% url 'club_query_add' %}" method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label class="form-label">Passing</label>
+                    <input type="text" class="form-control"  name="passing" placeholder="passing 94" required="required">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Attacking Short Passing</label>
+                    <input type="text" class="form-control"  name="attacking_short_passing" placeholder="attacking short passing 92" required="required">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Skill Dribbling</label>
+                    <input type="text" class="form-control"  name="skill_dribbling" placeholder="skill dribbling 97" required="required">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Skill Long Passing</label>
+                    <input type="text" class="form-control"  name="skill_long_passing" placeholder="skill long passing 92" required="required">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Movement Reactions</label>
+                    <input type="text" class="form-control"  name="movement_reactions" placeholder="movement reactions 95" required="required">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Power Shot Power</label>
+                    <input type="text" class="form-control"  name="power_shot_power" placeholder="power shot power 86" required="required">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Shooting</label>
+                    <input type="text" class="form-control"  name="shooting" placeholder="Shooting 96" required="required">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Mentality Vision</label>
+                    <input type="text" class="form-control"  name="mentality_vision" placeholder="mentality vision 94" required="required">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Mentality Composture</label>
+                    <input type="text" class="form-control"  name="mentality_composure" placeholder="mentality composture 96" required="required">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Goalkeeping Diving</label>
+                    <input type="text" class="form-control"  name="goalkeeping_diving" placeholder="goalkeeping diving 6" required="required">
+                </div>
 
-            <tr>
-                <td>Mentality Vision</td>
-	            <td><input type="text" class="form-control"  name="mentality_vision" placeholder="mentality vision 94" required="required"></td>
-                <td>Mentality Penalities</td>
-	            <td><input type="text" class="form-control"  name="mentality_penalties" placeholder="mentality penalities 75" required="required"></td>
-                <td>Mentality Composture</td>
-	            <td><input type="text" class="form-control"  name="mentality_composure" placeholder="mentality composture 96" required="required"></td>
-	        </tr>
+                <div class="mb-3">
+                    <label class="form-label">Goalkeeping Positioning</label>
+                    <input type="text" class="form-control"  name="goalkeeping_positioning" placeholder="goalkeeping positioning 14" required="required">
+                </div> 
 
-            <tr>
-                <td>Defending Marking</td>
-	            <td><input type="text" class="form-control"  name="defending_marking" placeholder="defending marking 33" required="required"></td>
-                <td>Defending Standing Tackle</td>
-	            <td><input type="text" class="form-control"  name="defending_standing_tackle" placeholder="defending stating tackle 37" required="required"></td>
-                <td>Defending Sliding Tackle</td>
-	            <td><input type="text" class="form-control"  name="defending_sliding_tackle" placeholder="defending sliding tackle 26" required="required"></td>
-	        </tr>
+                <div class="mt-3">
+                
+                
+                    <button type="submit" class="btn btn-primary" >SUBMIT</button>
+                
+                </div>
 
-            <tr>
-                <td>Goalkeeping Diving</td>
-	            <td><input type="text" class="form-control"  name="goalkeeping_diving" placeholder="goalkeeping diving 6" required="required"></td>
-                <td>Goalkeeping Handling</td>
-	            <td><input type="text" class="form-control"  name="goalkeeping_handling" placeholder="goal keeping handling 11" required="required"></td>
-                <td>Goalkeeping  Kicking</td>
-	            <td><input type="text" class="form-control"  name="goalkeeping_kicking" placeholder="goalkeeping kicking 15" required="required"></td>
-	        </tr>
-
-            <tr>
-                <td>Goalkeeping Positioning</td>
-	            <td><input type="text" class="form-control"  name="goalkeeping_positioning" placeholder="goalkeeping positioning 14" required="required"></td>
-                <td>Goalkeeping Reflexes</td>
-	            <td><input type="text" class="form-control"  name="goalkeeping_reflexes" placeholder="goalkeeping reflexes 8" required="required"></td>
-
-	        </tr>
-
-            <tr>
-	            <td></td>
-                <td></td>
-                <td></td>
-	            <td><button type="submit" class="btn btn-primary" >SUBMIT</button></td>
-                <td></td>
-                <td></td>
-	        </tr>
-	    </table>
-
-    </form>
-    <h2>{{msg}} {{estimate}}</h2>
+        </form>
+    </div>
+        <h2>{{msg}} {{estimate}}</h2>
      <h2>{{msg2}} {{overall}}</h2>
-</center>
 {% endblock %}
