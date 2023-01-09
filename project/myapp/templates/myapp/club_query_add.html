@@ -2,7 +2,23 @@
 {% load static %}
 {% block title %}Player Value Estimation{% endblock %}
 {% block body %}
-
+{% if msg %}
+<script>
+    $(document).ready(function () {
+        swal({
+            title: "Evaluated!",
+            text: "{{msg}}: €{{estimate}}",
+            icon: "info",
+        }).then((value) => {
+            swal({
+            title: "Evaluated!",
+            text: "{{msg2}}: {{overall}}",
+            icon: "info",
+        });
+    });
+    })
+</script>
+{% endif %}
     <div class="container mt-3">
         <h2 class="mb-3"><font color="#366092"> Evaluate</font></h2>
 
@@ -48,11 +64,6 @@
                     <label class="form-label">Goalkeeping Diving</label>
                     <input type="text" class="form-control"  name="goalkeeping_diving" placeholder="goalkeeping diving 6" required="required">
                 </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Goalkeeping Positioning</label>
-                    <input type="text" class="form-control"  name="goalkeeping_positioning" placeholder="goalkeeping positioning 14" required="required">
-                </div> 
 
                 <div class="mt-3">
                 

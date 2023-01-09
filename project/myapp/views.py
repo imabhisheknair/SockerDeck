@@ -314,18 +314,23 @@ from .models import player_club_history
 
 def admin_player_club_history_add(request):
     if request.method == 'POST':
-        club_id = 1
         status = 'active'
         dt = datetime.today().strftime('%Y-%m-%d')
         tm = datetime.today().strftime('%H:%M:%S')
 
         player_id = request.POST.get('player_id')
+        club_id = player_info.objects.filter(id=player_id)
+        if club_id:
+            club_id = club_id.get()
+        else:
+            return redirect(admin_player_club_history_add)   
+
         fr_dt = request.POST.get('fr_dt')
         to_dt = request.POST.get('to_dt')
         descp = request.POST.get('descp')
         curr_status = request.POST.get('curr_status')
 
-        pch = player_club_history(player_id=int(player_id),club_id=club_id,fr_dt=fr_dt,to_dt=to_dt,
+        pch = player_club_history(player_id=int(player_id),club_id=club_id.club_id,fr_dt=fr_dt,to_dt=to_dt,
                          descp=descp,curr_status=curr_status)
         pch.save()
         context = {'player_id':player_id,'msg': 'Record Added'}
@@ -651,23 +656,23 @@ def club_query_add(request):
         mentality_vision = request.POST.get('mentality_vision')
         mentality_composure = request.POST.get('mentality_composure')
         goalkeeping_diving = request.POST.get('goalkeeping_diving')
-        goalkeeping_positioning = request.POST.get('goalkeeping_positioning')
         ###################################################################
 
         input_set = [
-                    float(passing), float(shooting),  float(power_shot_power),
-                    float(attacking_short_passing), float(skill_dribbling), 
-                    float(skill_long_passing), float(movement_reactions),
-                    float(mentality_vision), float(mentality_composure),
-                    float(goalkeeping_diving), float(goalkeeping_positioning),
+                    float(passing), float(skill_dribbling), float(movement_reactions), 
+                    float(power_shot_power),  float(mentality_composure),
+                    float(attacking_short_passing), 
+                    float(skill_long_passing), float(shooting),  
+                    float(goalkeeping_diving), float(mentality_vision),
+
                 ]
         data_file_path = os.path.join(BASE_DIR, 'data/output.csv')
         tr_file = data_file_path
         result = player_test.player_prediction(training_file=tr_file, input_set=input_set)
         overall = player_test.player_prediction2(training_file=tr_file, input_set=input_set)
-        print(result)
 
-        estimate  = str(result)
+        estimate = round(float(result[0]), 4)
+        overall = round(float(overall[0]), 2)
 
         ####################################################################
         dt = datetime.today().strftime('%Y-%m-%d')
@@ -685,11 +690,12 @@ def club_query_add(request):
                         mentality_vision=mentality_vision,
                         goalkeeping_diving=goalkeeping_diving,
                         mentality_composure=mentality_composure,
-                        goalkeeping_positioning=goalkeeping_positioning,
                         dt=dt, tm=tm, estimate=estimate)
         ud.save()
+        
 
-        context = {'msg': 'Player avg value estimated','estimate':estimate,'msg2': 'Player overall value estimated','overall':overall}
+        context = {'msg': 'Player avg value estimated','estimate':str(estimate)+" M",
+        'msg2': 'Player overall value estimated','overall':overall}
         return render(request, 'myapp/club_query_add.html',context)
     else:
         context = {}
