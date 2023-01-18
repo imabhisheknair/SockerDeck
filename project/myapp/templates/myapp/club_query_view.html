@@ -21,6 +21,7 @@
             <th>ID</th>
             <th>Input</th>
             <th>Result</th>
+            <th>Overall</th>
             <th>Date/Time</th>
             <th>Action</th>
         </tr>
@@ -31,6 +32,7 @@
             <td>{{ b.id }}</td>
             <td>{{ b.age }},{{ b.height_cm }},{{ b.weight_kg }},{{ b.overall }},{{ b.weak_foot }},{{ b.skill_moves }},{{ b.attacking_crossing }},{{ b.attacking_finishing }},{{ b.attacking_heading_accuracy }},{{ b.attacking_short_passing }}..</td>
             <td>{{ b.estimate }}</td>
+            <td>{{ b.overall }}</td>
             <td>{{ b.dt }}/{{ b.tm }}</td>
             <td><a class="nav-link" href="../club_query_delete?id={{b.id}}">Delete</a></td>
         </tr>

@@ -246,13 +246,14 @@ def admin_player_info_profile(request):
         cl[c.id] = c.country
     if player:
         player = player.get()
+        print(player.attacking_crossing)
     else:
         return redirect(club_player_info_view)    
     context = {
         'player': player,
-        'country_list': cl
+        'country_list': cl,
     }
-    return render(request, "./myapp/admin_player_info_profile.html", context)
+    return render(request, "myapp/admin_player_info_profile.html", context)
 
 from .models import club_master
 
@@ -390,7 +391,6 @@ def admin_player_match_history_add(request):
 def admin_player_match_history_delete(request):
     id = request.GET.get('id')
     player_id = request.GET.get('player_id')
-    print('id = '+id)
     pmh = player_match_history.objects.get(id=int(id))
     pmh.delete()
     msg = 'Record Deleted'
@@ -405,8 +405,6 @@ def admin_player_match_history_view(request):
     context = {'match_list': pmh_l, 'msg': msg, 'player_id': player_id}
     return render(request, './myapp/admin_player_match_history_view.html', context)
 
-
-################ CLUB USER
 
 def club_club_master_add(request):
     if request.method == 'POST':
@@ -442,13 +440,10 @@ def club_club_master_add(request):
         return render(request, './myapp/club_club_master_add.html',context)
 
 
-
 def club_login(request):
     if request.method == 'POST':
         un = request.POST.get('un')
         pwd = request.POST.get('pwd')
-        #print(un,pwd)
-        #query to select a record based on a condition
         ul = user_login.objects.filter(uname=un, password=pwd, utype='club')
 
         if ul:
@@ -480,6 +475,7 @@ def club_home(request):
         }
         return render(request,'./myapp/club_home.html', context)
 
+
 def club_logout(request):
     try:
         del request.session['user_name']
@@ -488,6 +484,7 @@ def club_logout(request):
         return club_login(request)
     else:
         return club_login(request)
+
 
 def club_changepassword(request):
     if request.method == 'POST':
@@ -587,7 +584,6 @@ def club_player_add(request):
 def club_player_delete(request):
     club_id = request.session['user_id']
     id = request.GET.get('id')
-    print('id = '+id)
     cp = club_player.objects.get(player_id=int(id),club_id=int(club_id))
     cp.delete()
     msg = 'Record Deleted'
@@ -602,6 +598,7 @@ def club_player_delete(request):
         pi_l.append(pi)
     context = {'player_list': pi_l,'country_list': cl,'msg':msg}
     return render(request, './myapp/club_player_view.html',context)
+
 
 def club_player_view(request):
     club_id = request.session['user_id']
@@ -624,12 +621,14 @@ def club_player_view(request):
         }
     return render(request, './myapp/club_player_view.html', context)
 
+
 def club_player_club_history_view(request):
     player_id = request.GET.get('player_id')
     msg = ''
     pch_l = player_club_history.objects.filter(player_id=int(player_id))
     context = {'club_list': pch_l, 'msg': msg, 'player_id': player_id}
     return render(request, './myapp/club_player_club_history_view.html', context)
+
 
 def club_player_match_history_view(request):
     player_id = request.GET.get('player_id')
@@ -644,8 +643,6 @@ from . import player_test
 from project.settings import BASE_DIR
 def club_query_add(request):
     if request.method == 'POST':
-
-        
         passing = request.POST.get('passing')
         shooting = request.POST.get('shooting')
         attacking_short_passing = request.POST.get('attacking_short_passing')
@@ -692,8 +689,6 @@ def club_query_add(request):
                         mentality_composure=mentality_composure,
                         dt=dt, tm=tm, estimate=estimate)
         ud.save()
-        
-
         context = {'msg': 'Player avg value estimated','estimate':str(estimate)+" M",
         'msg2': 'Player overall value estimated','overall':overall}
         return render(request, 'myapp/club_query_add.html',context)
@@ -702,6 +697,7 @@ def club_query_add(request):
 
         return render(request, 'myapp/club_query_add.html',context)
 
+
 def club_query_delete(request):
     id = request.GET.get('id')
     print("id="+id)
@@ -709,6 +705,7 @@ def club_query_delete(request):
     lm = user_query.objects.get(id=int(id))
     lm.delete()
     return club_query_view(request)
+
 
 def club_query_view(request):
     user_id = request.session['user_id']
@@ -773,9 +770,44 @@ def club_games_view(request):
     context = {'match_list': cg_l, 'msg': msg}
     return render(request, './myapp/club_games_view.html', context)
 
+from .models import club_notifications
 
-##############USER
-######## USER ##############
+def club_notifications_view(request):
+    user_id = request.session['user_id']
+    club = club_master.objects.filter(user_id=user_id)
+    if club:
+        club = club.get()
+        club_id = club.id
+    else:
+        return redirect(club_login)
+
+    if request.POST:
+        heading = request.POST.get('heading', '')
+        url = request.POST.get('url', '')
+        content = request.POST.get('content', '')
+
+        club_notifications.objects.create(
+            club_id=club_id,
+            heading=heading,
+            url=url,
+            content=content,
+        )
+        messages.success(request, "Notification Added!")
+
+    notifications = club_notifications.objects.filter(club_id=club_id).all()
+
+    context = {
+        'notifications': notifications,
+    }
+
+    return render(request, "myapp/club_notifications_view.html", context)
+
+
+def club_delete_notification(request):
+    id = request.GET.get('id', '')
+    club_notifications.objects.filter(id=id).delete()
+    return redirect(club_notifications_view)
+
 from .models import user_details
 
 def user_details_add(request):
@@ -786,7 +818,6 @@ def user_details_add(request):
 
         gender = request.POST.get('gender')
 
-        print(gender)
         addr = request.POST.get('addr')
         pin = request.POST.get('pin')
         email = request.POST.get('email')
@@ -820,9 +851,7 @@ def user_login_check(request):
         if len(ul) == 1:
             request.session['user_id'] = ul[0].id
             request.session['user_name'] = ul[0].uname
-            context = {'uname': request.session['user_name']}
-
-            return render(request, 'myapp/user_home.html',context)
+            return redirect(user_home)
         else:
             context={'msg':'Invalid username or password'}
             return render(request, 'myapp/user_login.html',context)
@@ -830,9 +859,17 @@ def user_login_check(request):
         return render(request, 'myapp/user_login.html')
 
 def user_home(request):
-
-    context = {'uname':request.session['user_name']}
+    
+    cg_l = club_games.objects.all()
+    context = {'uname':request.session['user_name'], 'match_list': cg_l}
     return render(request,'./myapp/user_home.html',context)
+
+def user_notifications_view(request):
+    notifications = club_notifications.objects.all()
+    context = {
+        'notifications': notifications,
+    }
+    return render(request, "myapp/user_notifications_view.html", context)
 
 def user_logout(request):
     try:

@@ -182,6 +182,12 @@ class ClubRequests(models.Model):
     club = models.ForeignKey(club_master, on_delete=models.CASCADE)
     date_added = models.DateTimeField(auto_now_add=True)
 
+class club_notifications(models.Model):
+    club = models.ForeignKey(club_master, on_delete=models.CASCADE)
+    heading = models.CharField(max_length=200)
+    content = models.TextField()
+    url = models.URLField()
+    date_added = models.DateTimeField(auto_now_add=True)
 
 class PlayerRequests(models.Model):
     player = models.ForeignKey(player_info, on_delete=models.CASCADE)

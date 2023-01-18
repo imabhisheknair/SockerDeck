@@ -35,7 +35,7 @@ urlpatterns = [
 
     path('admin_player_info_add', views.admin_player_info_add, name='admin_player_info_add'),
     path('admin_player_info_view', views.admin_player_info_view, name='admin_player_info_view'),
-    path('admin_player_info_profile', views.admin_player_info_profile, name='admin_player_info_view'),
+    path('admin_player_info_profile', views.admin_player_info_profile, name='admin_player_info_profile'),
     path('admin_player_info_delete', views.admin_player_info_delete, name='admin_player_info_delete'),
 
     path('admin_club_master_add', views.admin_club_master_add, name='admin_club_master_add'),
@@ -63,6 +63,8 @@ urlpatterns = [
     path('club_player_view/profile', views.club_player_profile, name='club_player_profile'),
     path('club_player_delete', views.club_player_delete, name='club_player_delete'),
     path('club_player_request', views.club_player_request),
+    path('club_notifications_view', views.club_notifications_view),
+    path('club_delete_notification', views.club_delete_notification),
 
     path('club_player_info_view', views.club_player_info_view, name='club_player_info_view'),
     path('club_player_club_history_view', views.club_player_club_history_view, name='club_player_club_history_view'),
@@ -78,6 +80,7 @@ urlpatterns = [
 
     path('user_login', views.user_login_check, name='user_login'),
     path('user_home', views.user_home, name='user_home'),
+    path('user_notifications_view', views.user_notifications_view, name='user_home'),
     path('user_details_add', views.user_details_add, name='user_details_add'),
     path('user_logout', views.user_logout, name='user_logout'),
     path('user_changepassword', views.user_changepassword, name='user_changepassword'),
